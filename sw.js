@@ -1,7 +1,8 @@
-const nombreCache = 'apv-v1';
+const nombreCache = 'apv-v2';
 const archivos = [
     './',
     './index.html',
+    './error.html',
     './css/bootstrap.css',
     './css/styles.css',
     './js/app.js',
@@ -32,7 +33,16 @@ self.addEventListener('activate', e => {
 
     console.log('Service Worker activado')
 
-    console.log(e);
+    e.waitUntil(
+        caches.keys()
+           .then( keys => {
+
+            return Promise.all(
+                keys.filter(key => key !== nombreCache)
+                     .map( key => caches.delete(key)) // borrar las demas versiones
+            )
+           })
+    )
 });
 
 
@@ -47,6 +57,7 @@ self.addEventListener('fetch', e => {
         .then(respuestaCache => {
             return respuestaCache
         })
+        .catch(() => caches.match('./error.html'))
     )
 })
 
