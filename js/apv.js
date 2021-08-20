@@ -180,7 +180,7 @@ function nuevaCita(e) {
 
     // Validar
     if( mascota === '' || propietario === '' || telefono === '' || fecha === ''  || hora === '' || sintomas === '' ) {
-        ui.imprimirAlerta('Todos los mensajes son Obligatorios', 'error')
+        ui.imprimirAlerta('Todos los campos son Obligatorios', 'error')
 
         return;
     }
